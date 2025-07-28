@@ -1,0 +1,22 @@
+<?php
+require_once 'config/init.php';
+header('Content-Type: application/json');
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Example: Submitting a job application
+    $job_id = (int)$_POST['job_id'];
+    $proposal = sanitize($_POST['proposal']);
+
+    if (empty($proposal)) {
+        echo json_encode(['success' => false, 'message' => 'Proposal cannot be empty.']);
+        exit;
+    }
+
+    $stmt = $db->prepare("INSERT INTO applications (job_id, user_id, proposal, date_applied) VALUES (?, ?, ?, NOW())");
+    if ($stmt->execute([$job_id, $_SESSION['user_id'], $proposal])) {
+        echo json_encode(['success' => true, 'message' => 'Application submitted successfully!']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Failed to submit application.']);
+    }
+}
+?>

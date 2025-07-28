@@ -1,13 +1,13 @@
 <aside class="sidebar">
     <div class="sidebar-header">
-    <div class="sidebar-user-pic">
-        <img src="<?php echo $_SESSION['profile_pic'] ?? 'assets/images/default-profile.png'; ?>" alt="Profile Picture">
+        <div class="sidebar-user-pic">
+            <img src="<?php echo $_SESSION['profile_pic'] ?? 'assets/images/default-profile.png'; ?>" alt="Profile Picture">
+        </div>
+        <div class="sidebar-user-info">
+            <h2><?php echo htmlspecialchars($_SESSION['name']); ?></h2>
+            <p><?php echo ucfirst($_SESSION['role']); ?></p>
+        </div>
     </div>
-    <div class="sidebar-user-info">
-        <h2><?php echo htmlspecialchars($_SESSION['name']); ?></h2>
-        <p><?php echo ucfirst($_SESSION['role']); ?></p>
-    </div>
-</div>
 
     <ul class="sidebar-menu">
         <li><a href="<?php echo BASE_URL; ?>dashboard.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : ''; ?>">
@@ -16,15 +16,22 @@
         <?php if (isStudent()): ?>
             <li><a href="<?php echo BASE_URL; ?>jobs.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'jobs.php' ? 'active' : ''; ?>">
                 <i class="fas fa-search"></i> Browse Jobs</a></li>
-            <li><a href="<?php echo BASE_URL; ?>applications.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'applications.php' ? 'active' : ''; ?>">
+            <li><a href="<?php echo BASE_URL; ?>my-applications.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'my-applications.php' ? 'active' : ''; ?>">
                 <i class="fas fa-file-alt"></i> My Applications</a></li>
-        <?php else: ?>
+        <?php elseif(isEmployer()): ?>
             <li><a href="<?php echo BASE_URL; ?>post-job.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'post-job.php' ? 'active' : ''; ?>">
                 <i class="fas fa-plus"></i> Post Job</a></li>
             <li><a href="<?php echo BASE_URL; ?>my-jobs.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'my-jobs.php' ? 'active' : ''; ?>">
                 <i class="fas fa-briefcase"></i> My Jobs</a></li>
             <li><a href="<?php echo BASE_URL; ?>applications.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'applications.php' ? 'active' : ''; ?>">
                 <i class="fas fa-users"></i> Applications</a></li>
+        <?php elseif(isAdmin()): ?>
+            <li><a href="<?php echo BASE_URL; ?>admin-users.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'admin-users.php' ? 'active' : ''; ?>">
+                <i class="fas fa-users-cog"></i> Manage Users</a></li>
+            <li><a href="<?php echo BASE_URL; ?>admin-jobs.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'admin-jobs.php' ? 'active' : ''; ?>">
+                <i class="fas fa-briefcase"></i> Manage Jobs</a></li>
+            <li><a href="<?php echo BASE_URL; ?>admin-applications.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'admin-applications.php' ? 'active' : ''; ?>">
+                <i class="fas fa-file-contract"></i> Manage Applications</a></li>
         <?php endif; ?>
         
         <li><a href="<?php echo BASE_URL; ?>reviews.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'reviews.php' ? 'active' : ''; ?>">
